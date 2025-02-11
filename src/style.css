@@ -19,3 +19,36 @@ body {
 .floating {
   animation: float 6s ease-in-out infinite;
 }
+
+.heart {
+  position: fixed;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+
+.valentine-message {
+  background: linear-gradient(135deg, #ff6b6b, #ffd1d1);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
+  animation: glow 1.5s infinite alternate;
+  display: none;
+}
+
+/* Glow effect */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 20px rgba(255, 107, 107, 1);
+  }
+}
