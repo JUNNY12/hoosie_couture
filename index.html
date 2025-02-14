@@ -174,28 +174,65 @@
       heart.className = 'heart';
       heart.style.left = Math.random() * window.innerWidth + 'px';
       heart.style.top = '-20px';
+      heart.style.position = 'fixed'; // Ensure position is fixed
       document.body.appendChild(heart);
 
-      // Animate the heart falling
+      // Use requestAnimationFrame for smoother animation
       let position = -20;
-      const interval = setInterval(() => {
+      let animationFrameId;
+
+      function animate() {
         position += 2;
         heart.style.top = position + 'px';
 
         // Remove heart when it reaches bottom of screen
         if (position > window.innerHeight) {
-          clearInterval(interval);
           heart.remove();
+          // Cancel the animation frame when removing the heart
+          cancelAnimationFrame(animationFrameId);
+          return;
         }
-      }, 20);
+
+        // Continue animation
+        animationFrameId = requestAnimationFrame(animate);
+      }
+
+      // Start the animation
+      animationFrameId = requestAnimationFrame(animate);
     }
 
-    const today = new Date();
-    const valMessage = document.querySelector('.valentine-message');
-    if (today.getMonth() === 1 && today.getDate() === 14) {
-      setInterval(createHeart, 700);
-      valMessage.style.display = 'block';
+    // Create a variable to store the interval ID
+    let heartCreationInterval;
+
+    function startValentineAnimation() {
+      const today = new Date();
+      const valMessage = document.querySelector('.valentine-message');
+
+      if (today.getMonth() === 1 && today.getDate() === 14) {
+        // Clear any existing interval first
+        if (heartCreationInterval) {
+          clearInterval(heartCreationInterval);
+        }
+
+        heartCreationInterval = setInterval(createHeart, 700);
+        valMessage.style.display = 'block';
+      }
     }
+
+    // Add some basic CSS to ensure hearts are visible
+    const style = document.createElement('style');
+    style.textContent = `
+  .heart {
+    position: fixed;
+    z-index: 1000;
+    font-size: 24px;
+    pointer-events: none;
+  }
+`;
+    document.head.appendChild(style);
+
+    // Start the animation
+    startValentineAnimation();
   </script>
 
 </body>
